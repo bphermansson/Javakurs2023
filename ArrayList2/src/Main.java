@@ -1,7 +1,6 @@
-package ArrayListExercise;
 import java.util.ArrayList;
 
-public class Main() {
+public class Main {
 
 	public static void main(String[] args) {
 		ArrayList<String> list = new ArrayList<String>();
@@ -21,7 +20,7 @@ public class Main() {
 		intList.add(8);
 		intList.add(7);
 		
-		boolean res = recurse(intList, 4, intList.size()-1);
+		boolean res = recurse(intList, 4, intList.size());
 		System.out.println("res " + res);		
 	}
 	private static void printOut(ArrayList list) {
@@ -47,10 +46,11 @@ public class Main() {
 	private static boolean recurse(ArrayList<Integer> aList, Integer y, int index) {
 		if(index>0) {
 			//if(aList.get(index).equals(y)) {
-			if(aList.get(index) == y) {
+			if(aList.get(index-1) < y) {
 				return true;
 			}
 			else {
+				System.out.println(index + "-" + aList.get(index));
 				index--;
 				recurse(aList, y, index);
 			}
