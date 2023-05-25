@@ -41,10 +41,10 @@ public class Model {
 	private void addValueToMemory(Integer key, Long value){
 		System.out.println("Add: " + key + " - " + value);
 		cache.put(key, value);
-	    //System.out.println("Full list: " + cache);
 	}
 	public void clearMemory(){
 		cache.clear();
+		System.out.println("Cleared, full list: " + cache);
 	}
 	
 	int res=2;
@@ -104,7 +104,7 @@ public class Model {
 		}
 		catch (IllegalArgumentException e) {
 			System.out.println("Error " + e );
-			System.exit(1);
+			val = -1;
 		}
 		return val;
 	}			

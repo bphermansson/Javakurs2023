@@ -1,4 +1,6 @@
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.BorderFactory;
@@ -54,6 +56,34 @@ public class Program {
 			btnPanel.add(quitButton, BorderLayout.WEST);
 		
 		window.setVisible(true);
+		
+		computeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				int inp = Integer.valueOf(inputVal.getText()); 
+				Long res = myModel.compute2Power(inp);
+				System.out.println( "compute2Power result: " + res);
+				
+				if (res != -1) {
+					resultPanel.setText(res.toString());	
+				}
+				else {
+					resultPanel.setText("Input a positive number please!");
+				}
+			}
+		});
+			
+		clearButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				myModel.clearMemory();
+			}
+		});
+				
+		quitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				System.out.println("Good Bye!");
+				System.exit(0);
+			}
+		});
 
 		/*
 		try {
