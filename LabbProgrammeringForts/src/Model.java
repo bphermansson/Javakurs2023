@@ -3,64 +3,45 @@ import java.util.HashMap;
 public class Model {
 	private HashMap<Integer, Long> cache = new HashMap<Integer, Long>();
 	
-	public  long getValue(Integer key) {
-		if (key == (int)key && key > 0) {		// Is key an integer above zero?
-			return getValueFromMemory(key);
-		}
-		else {
-			throw new IndexOutOfBoundsException();	
-		}
-	}
-	
 	private  long getValueFromMemory(Integer key){
 		long val = 0;
 		try {
-			val = cache.get(key);
+			if (key == (int)key && key >= 0) {		// Is key an integer above zero?
+				val = cache.get(key);
+			}
+			else {
+				throw new IndexOutOfBoundsException();	
+			}	
 		}
 		catch (Exception e) {
 			System.out.println("Invalid key! " + e);
 		}		
-		return val;
+		finally {
+			return val;	
+		}
 	}
-	
-	public void setValue(Integer key, Long value){
-		// Check if key is used
-		// Check if key & value is valid
-		System.out.println("Add value to memory");
-		
+
+	private void addValueToMemory(Integer key, Long value){
+		System.out.println("Add: " + key + " - " + value);
 		if (key == (int)key && key >= 0 && value == (Long)value && value>=0) {		// Is key an integer above zero? Value a long above zero?
 			if (cache.containsKey(key) ) {
 				System.out.println("Key already exists! ");
 			}
 			else {
-				addValueToMemory(key, value);
+				cache.put(key, value);
 			}
 		}
 	}
 	
-	private void addValueToMemory(Integer key, Long value){
-		System.out.println("Add: " + key + " - " + value);
-		cache.put(key, value);
-	}
 	public void clearMemory(){
 		cache.clear();
-		System.out.println("Cleared, full list: " + cache);
+		System.out.println("Memory cleared, full list: " + cache);
 	}
 	
 	int res=2;
 	int sum=2;
 
-	public long computePower(int power) {
-		if(power>=0) {
-			return (computePowerInternal(power));
-		}
-		else {
-			System.out.println("Invalid power value: " + power);
-			return 0;
-		}
-	}
-	
-	private long computePowerInternal(int power) {
+	private long computePower(int power) {
 		if(power>1) {
 			sum = sum * 2;			
 			power--;
@@ -86,21 +67,22 @@ public class Model {
 		// Let power be the key, and the result the value
 		long key = 0, val = 0;
 		try {
-			isPowerLessThanZero(power);
-			System.out.println("Add computed value. Power value ok: " + power );
+			if (power<0) {
+				throw new IllegalArgumentException();
+			}		
+			System.out.println("Power value ok: " + power );
 			key = power;
 			
 			if (cache.containsKey((int)key) ) {
 				System.out.println("Value already exists!");
-				val = getValue((int)key);
+				val = getValueFromMemory((int)key);
 			}
 			else {
 				val = computePower(power);
-				System.out.println("New val: " + val + ", key: " + key);
-				setValue((int)key, val);
-			    System.out.println("Memory contains: " + cache);	
+				System.out.println("New value added: " + val + ", key: " + key);
+				addValueToMemory((int)key, val);
 			}
-			
+		    System.out.println("Memory contains: " + cache);				
 		}
 		catch (IllegalArgumentException e) {
 			System.out.println("Error " + e );
@@ -108,10 +90,4 @@ public class Model {
 		}
 		return val;
 	}			
-	
-	private void isPowerLessThanZero(int power) {
-		if (power<0) {
-			throw new IllegalArgumentException();
-		}
-	}
 }
