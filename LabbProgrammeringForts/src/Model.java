@@ -79,8 +79,8 @@ public class Model {
 			}
 			else {
 				val = computePower(power);
-				System.out.println("New value added: " + val + ", key: " + key);
 				addValueToMemory((int)key, val);
+				System.out.println("New value added: " + val + ", key: " + key);
 			}
 		    System.out.println("Memory contains: " + cache);				
 		}
